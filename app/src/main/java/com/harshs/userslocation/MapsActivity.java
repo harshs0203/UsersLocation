@@ -74,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                mMap.clear();
                 LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(sydney).title("Yours Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 1));
@@ -107,6 +108,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            Location lastKnownwLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            mMap.clear();
+            LatLng sydney = new LatLng(lastKnownwLocation .getLatitude(), lastKnownwLocation .getLongitude());
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Yours Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 1));
         }
     }
     }
